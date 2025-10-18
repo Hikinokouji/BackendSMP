@@ -10,6 +10,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JwtTokenProvider {
@@ -108,6 +110,12 @@ public class JwtTokenProvider {
         String userName = getUserName(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(getUserName(token));
         return new UsernamePasswordAuthenticationToken(userName, "", userDetails.getAuthorities());
+    }
+
+    public String refactorTokenToName(String token) {
+        String user = getUserName(token.substring(7));
+//        return getUserName(token).substring(7);}
+        return user;
     }
 
 }
