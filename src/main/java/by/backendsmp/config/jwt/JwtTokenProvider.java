@@ -1,6 +1,7 @@
 package by.backendsmp.config.jwt;
 
 import by.backendsmp.entity.User;
+import by.backendsmp.repository.UserRepository;
 import by.backendsmp.service.user.UserService;
 import by.backendsmp.web.dto.jwt.JwtProperties;
 import by.backendsmp.web.dto.jwt.JwtResponse;
@@ -26,7 +27,8 @@ import java.util.Date;
 public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
     private final UserDetailsService userDetailsService;
-    private final UserService userService;
+    //private final UserService userService;
+    private final UserRepository userRepository;
     private Key key;
 
     @PostConstruct
@@ -68,7 +70,7 @@ public class JwtTokenProvider {
             throw new RuntimeException("Не валідний токен");
         }
         Long userId = Long.valueOf(getId(refreshToken));
-        User user = userService.getById(userId);
+        User user = userRepository.getById(userId);
         jwtResponse.setId(userId);
         jwtResponse.setUserName(user.getUserName());
         jwtResponse.setAccessToken(createAccessToken(userId, user.getUserName()));

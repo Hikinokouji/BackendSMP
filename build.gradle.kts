@@ -44,6 +44,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
     implementation("org.flywaydb:flyway-core")
 
+    // https://mvnrepository.com/artifact/io.minio/minio
+    implementation("io.minio:minio:8.6.0")
+
 
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")

@@ -1,8 +1,10 @@
 package by.backendsmp.service.user;
 
+import by.backendsmp.config.jwt.JwtTokenProvider;
 import by.backendsmp.entity.User;
 import by.backendsmp.entity.users.UserMainPageResponse;
 import by.backendsmp.repository.UserRepository;
+import by.backendsmp.web.dto.SettingUserDTO;
 import by.backendsmp.web.dto.jwt.JwtRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,29 +21,12 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final TransactionOperations transactionOperations;
     private final PasswordEncoder passwordEncoder;
 
 
     public User registerUser(User user){
-//        return userRepository.save(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
-    }
-
-    public User logIn(JwtRequest jwtRequest) {
-        Optional<User> user = userRepository.findUserByUserName(jwtRequest.getUserName());
-        if(user.isPresent()){
-            if(jwtRequest.getPassword().equals(user.get().getPassword())){
-                return user.get();
-            }
-            else{
-                log.info("Wrong password");
-                return null;
-            }
-        }
-        log.info("User not found");
-        return null;
     }
 
     public User getById(Long userId) {
@@ -52,6 +37,21 @@ public class UserService {
         Optional<User> user = userRepository.findUserByUserName(userName);
         if(user.isPresent()){
             return user.get();
+        }
+        throw new UsernameNotFoundException("User not found");
+    }
+
+    public SettingUserDTO findUserByUserNameForSetting(String userName) {
+        Optional<User> user = userRepository.findUserByUserName(userName);
+        if(user.isPresent()){
+            User userDto = user.get();
+            SettingUserDTO settingUserDTO = new SettingUserDTO();
+            settingUserDTO.setUserName(userDto.getUserName());
+            settingUserDTO.setEmail(userDto.getEmail());
+            settingUserDTO.setBirthDate(userDto.getBirthDate());
+            settingUserDTO.setStreamKey(userDto.getStreamKey());
+            settingUserDTO.setDescription(userDto.getDescription());
+            return settingUserDTO;
         }
         throw new UsernameNotFoundException("User not found");
     }
@@ -84,5 +84,9 @@ public class UserService {
 
                     return dto;
                 });
+    }
+
+    public Long getIdByUsername(String userName){
+        return userRepository.customFindUserIdByUserName(userName);
     }
 }

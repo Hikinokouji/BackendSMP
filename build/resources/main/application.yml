@@ -15,8 +15,16 @@ spring:
     date-format: dd-MM-yyyy HH:mm
     time-zone: UTC
 
+
 security:
   jwt:
     secret: c2ZBJUAjZndFZ2Yyd21uZm9qMTIzb2pmOGozNTFoZm5xMjNuZjkx
     access: 3600000
     refresh: 2592000000
+
+minio:
+#  url: http://minio:9003
+  url: http://localhost:9003
+  accessKey: admin
+  secretKey: admin1234
+  bucket: avatars
