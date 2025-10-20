@@ -4,14 +4,15 @@ import by.backendsmp.entity.users.UserMainPageResponse;
 import by.backendsmp.service.AvatarService;
 import by.backendsmp.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class UserController {
     private final String avatar = "avatar";
     private final String profile = "profile";
     private final String fullAvatar = "full_avatar";
+    private final String testIpAddress = "10.182.81.177";
 
     @GetMapping("/getUser")
     public ResponseEntity<?> getUser(@RequestParam("user") String userName){
@@ -52,6 +54,7 @@ public class UserController {
     public ResponseEntity<?> getAvatars(@RequestParam("user") String userName){
         Long userId = userService.getIdByUsername(userName);
         Map<String, String> presignedUrl = avatarService.getAvatar(userId, fullAvatar);
+        log.info("Return Get Avatars: ", presignedUrl);
         return ResponseEntity.ok(presignedUrl);
     }
 }

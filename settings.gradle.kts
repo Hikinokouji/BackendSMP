@@ -1,1 +1,1 @@
-rootProject.name = "BackendSMP"
+rootProject.name = "SH-BackendService"

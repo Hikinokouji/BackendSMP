@@ -7,6 +7,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  data:
+    redis:
+      host: 10.182.81.177
+      port: 6379
 
   flyway:
     enabled: false
@@ -14,6 +18,10 @@ spring:
   jackson:
     date-format: dd-MM-yyyy HH:mm
     time-zone: UTC
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
 
 
 security:
@@ -23,8 +31,9 @@ security:
     refresh: 2592000000
 
 minio:
+  url: http://10.182.81.177:9003
 #  url: http://minio:9003
-  url: http://localhost:9003
+#  url: http://localhost:9003
   accessKey: admin
   secretKey: admin1234
   bucket: avatars

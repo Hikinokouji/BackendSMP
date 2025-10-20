@@ -8,7 +8,6 @@ import java.time.LocalDate;
 public class SettingUserDTO {
     private String userName;
     private String email;
-    private LocalDate birthDate;
     private String streamKey;
     private String description;
 }

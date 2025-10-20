@@ -48,7 +48,6 @@ public class UserService {
             SettingUserDTO settingUserDTO = new SettingUserDTO();
             settingUserDTO.setUserName(userDto.getUserName());
             settingUserDTO.setEmail(userDto.getEmail());
-            settingUserDTO.setBirthDate(userDto.getBirthDate());
             settingUserDTO.setStreamKey(userDto.getStreamKey());
             settingUserDTO.setDescription(userDto.getDescription());
             return settingUserDTO;
